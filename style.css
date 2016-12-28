@@ -1,0 +1,73 @@
+#guui {
+	width: 180px;
+}
+
+.regInput {
+	width: 180px;
+	height: 30px;
+	margin-bottom: 28px;
+}
+.regInput div.input {
+	border: 2px solid #d2d2d2;
+	height: 34px;
+	width: 180px;
+	border-radius: 4px;
+} 
+.regInput input {
+	border: 0px;
+	width: 178px;
+	height: 32px;
+	outline: none;
+	margin-bottom: 3px;
+}
+
+
+.regInput span {
+	font-size: 12px;
+	display: none;
+}
+
+.borderFocus div.input {
+	border: 2px solid #59c1df;
+}
+.borderFocus .input span.wrong {
+	display: none;
+}
+.borderFocus .input span.tip {
+	display: block;
+	color: #59c1df;
+}
+
+.borderBlur div.input {
+	border: 2px solid #faad36;
+}
+.borderBlur .input span.tip {
+	display: none;
+}
+.borderBlur .input span.wrong {
+	display: block;
+	color: #faad36;
+}
+.borderErro div.input {
+	/*border: 2px solid skyblue;*/
+}
+.borderErro span {
+	display: none;
+}
+
+
+
+
+
+
+
+
+#login-btn {
+	width: 100px;
+	height: 25px;
+	background-color: #d2d2d2;
+	color: #fff;
+	border: none;
+	margin: 0 auto;
+	display: block;
+}
