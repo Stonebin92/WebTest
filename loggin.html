@@ -39,18 +39,18 @@
 			<div class="input">
 				<input type="email" data-bind="event: {focus: function(m, e){this.FuncSetTip(m, e, 5)}, blur: FuncCheckMail}, textInput: AttrRegisterUser().mailAddress" name="mailAddress" placeholder="邮箱地址">
 				<span data-bind="visible: AttrTipView() == 5" class="tip">请输入常用邮箱地址</span>
-				<span data-bind="visible: AttrErrView() == 5" class="wrong">邮箱不能为空</span>
+				<span data-bind="visible: AttrErrView() == 5, text: AttrMailErr" class="wrong">邮箱不能为空</span>
 			</div>
 		</div>
-		<button type="button" id="login-btn">注册</button>
+		<button data-bind="click: FuncRegister, enable: AttrIsPass, style: {background: AttrIsPass() ? '#2fb2d7' : '#ccc'}" type="button" id="login-btn" disabled="disabled">注册</button>
 	</div>
 </body>
-	<script type="text/javascript" src="./static/jquery-1.8.0.min.js"></script>
-	<script type="text/javascript" src="./static/jquery-ui-1.8.16.custom.min.js"></script>
-	<script type="text/javascript" src="./static/knockout-3.3.0.js"></script>
-	<script type="text/javascript" src="./static/jquery-tecul-lib.js"></script>
-	<script type="text/javascript" src="./static/jquery-tecul-ui.js"></script>
-	<script type="text/javascript" src="./static/md5.js"></script>
+	<script type="text/javascript" src="./js/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="./js/jquery-ui-1.8.16.custom.min.js"></script>
+	<script type="text/javascript" src="./js/knockout-3.3.0.js"></script>
+	<script type="text/javascript" src="./js/jquery-tecul-lib.js"></script>
+	<script type="text/javascript" src="./js/jquery-tecul-ui.js"></script>
+	<script type="text/javascript" src="./js/md5.js"></script>
 	<script type="text/javascript">
 		var Ctrl = $('#guui');
 		//$('#nickName').focus();
@@ -65,10 +65,10 @@
 
 			this.AttrRegView = ko.observable(0);
 			this.AttrGetId = ko.observable('');
-			this.AttrTipView = ko.observable(0); 
-			this.AttrErrView = ko.observable(0); 
-			this.AttrIsAgree = ko.observable(false); 
-			this.AttrIsPass = ko.observable(false); 
+			this.AttrTipView = ko.observable(0);
+			this.AttrErrView = ko.observable(0);
+			this.AttrIsAgree = ko.observable(false);
+			this.AttrIsPass = ko.observable(false);
 			this.AttrMailErr = ko.observable('');
 
 			this.AttrIsName=ko.observable(false);
@@ -111,7 +111,7 @@
 					this.FuncSetErr(m, e, 0); //隐藏提示信息
 					this.AttrIsName(true);
 				} else {
-					$('input[name=realName]').parent().parent().addClass('borderBlur');		
+					$('input[name=realName]').parent().parent().addClass('borderBlur');
 					this.FuncSetErr(m, e, 2);
 					this.AttrIsName(false);
 				}
@@ -126,7 +126,7 @@
 					this.AttrIsPsw(true);
 					/*if (this.AttrRegisterUser().pwdConfirm != '') {
 						$('input[name=passWord]').parent().parent().removeClass('borderBlur borderFocus');
-						this.FuncSetErr(m, e, 3); 
+						this.FuncSetErr(m, e, 3);
 						this.AttrIsPsw(false);
 					}
 					return;*/
@@ -161,6 +161,7 @@
 			/*邮箱地址输入*/
 			this.FuncCheckMail = function  (m, e) {
 				if (this.AttrRegisterUser().mailAddress != '') {
+
 					if (this.AttrRegisterUser().mailAddress.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
 							$('input[name=mailAddress]').parent().parent().removeClass('borderBlur borderFocus');
 							this.FuncSetErr(m, e, 0); //隐藏提示信息
@@ -168,28 +169,35 @@
 					} else {
 						this.AttrMailErr('邮箱的格式不符合要求');
 						$('input[name=mailAddress]').parent().parent().addClass('borderBlur');
-						this.FuncSetErr(m, e, 5); 
+						this.FuncSetErr(m, e, 5);
 						this.AttrIsMail(false);
 					}
 				} else {
 					this.AttrMailErr('邮箱不能为空2');
 					$('input[name=mailAddress]').parent().parent().addClass('borderBlur');
-					this.FuncSetErr(m, e, 5); 
+					this.FuncSetErr(m, e, 5);
 					this.AttrIsMail(false);
 				}
 				this.FuncCheckIsPass();
-			}
+			}.bind(this);
 
 			/*通过判定*/
 			this.FuncCheckIsPass = function () {
 				if (this.AttrIsName() && this.AttrIsPsw() && this.AttrIsMail()) {
-					this.AttrIsAgree(true);
+					this.AttrIsPass(true);
 				} else {
-					this.AttrIsAgree(false);
+					this.AttrIsPass(false);
 				}
 			}
 
-
+			this.FuncRegister = function() {
+				var data = '';
+				data += '昵称：' + $('#nickName').val();
+				data += '，真实姓名：' + $('input[name="realName"]').val();
+				data += '，密码：' + $('input[name="passWord"]').val();
+				data += '，邮箱地址：' + $('input[name="mailAddress"]').val();
+				alert('你提交是数据是：' + data)
+			}.bind(this);
 
 
 
@@ -197,8 +205,6 @@
 		}
 
 		var model_Login = new Model_Login();
-		// Model_Login.Bindings($('body')[0]);
-		ko.applyBindings(Model_Login());
-		//$('#nickName').focus();
+		ko.applyBindings(model_Login);
 	</script>
 </html>
