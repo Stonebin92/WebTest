@@ -1,0 +1,316 @@
+<div class="v4-right-manage" id="{{.GUID}}">
+	<div class="head-tabs">
+		<div data-bind="foreach: ListHead" class="clearfix"> <!-- 绑定标题 -->
+			<div data-bind="click: $root.EventSelHead, css: {'current': $data.UI_IsSel()}"  class="left items current"> <!-- 当标题切换对应内容切换(通过添加current样式) -->
+				<span data-bind="text: $data.Name">新闻</span>
+				<span data-bind="visible: !$data.IsFirst, click: $root.EventCloseHead" class="i-close" title="关闭"></span> <!-- 控制关闭x的显隐，单击关闭对应内容 -->
+			</div>
+		</div>
+	</div>
+	<div class="head">
+		<a data-bind="visible: AttrStatus() == 0, click: EventAddNews" class="items supplier-bluebtn">新增新闻</a> <!-- 显隐控制，单击新增新闻(进入新闻添加页面) -->
+		<a data-bind="visible: AttrStatus() == 2, click: EventEdit" class="items">编辑</a> <!-- 单击加入编辑新闻页面 -->
+		<a data-bind="visible: AttrStatus() == 2, click: EventRemove" class="items">删除</a> <!-- 单击将该标题下面的内容从数据库和页面上删除 -->
+		<a data-bind="visible: AttrStatus() == 1, click: EventSaveInterface" class="items supplier-bluebtn">发布</a> <!-- 单击将修改或新增的新闻提交到数据库并在页面显示 --> 
+		<!-- opacity5 -->
+		<!-- <div data-bind="visible: AttrStatus()==0" class="input-search right">
+			<span class="i-search"></span>
+			<input data-bind="textInput: AttrSearchValue" type="text" placeholder="快速搜索">
+		</div>-->
+	</div>
+	<!-- 新闻列表 -->
+	<div data-bind="visible: AttrStatus() == 0" class="right-contentA p25 bgff" style="display: none-;">
+		<div class="v4-news-editlist list-widgets">
+			<ul data-bind="foreach: AttrListData.data"> <!-- 绑定循环显示新闻内容数据 -->
+				<li data-bind="visible: $data.ExtType!=2"> <!-- 控制显隐 注意ExtType!=2不能有空格-->
+					<!-- 新闻图片 -->
+					<div data-bind="style: {'background' : 'url('+$data.UI_Image+')'}" class="news-img image-normal" style="background-image: url(/V2.4/img/news?id=57fb3d0949f31668dd000006);"></div> <!-- 新闻简略图片显示 -->
+					<div class="overflow-h">
+						<a data-bind="text: $data.Title, click: $root.EventDetail" class="fs18 title">数百用户建群吐槽iPhone7问题 客服称不影响正常使用数百用户建群吐槽iPhone7问题 客服称不影响正常使用</a> <!-- 显示新闻标题，单击进入新闻详细页面 -->
+						<div data-bind="foreach: $data.Tags" class="label"> <!-- 绑定循环显示各个新闻tags -->
+							<span data-bind="text: $data">互联网</span> <!-- 显示新闻tags -->
+						</div>
+						<div class="date">
+							<span data-bind="text: $data.CreateDate">2016-07-26 15: 30</span> <!-- 显示新闻创建时间 -->
+							<span class="ml10" data-bind="text: '跟贴('+$data.UI_CommentCount()+')'">跟贴（20）</span> <!-- 显示跟帖人数 -->
+						</div>
+					</div>
+				</li>
+				<!-- 主题新闻 -->
+				<li data-bind="visible: $data.ExtType==2" class="theme-news"><!-- 链接是专题新闻的链接 -->
+					<!-- 新闻图片 -->
+					<div data-bind="style: {'background': 'url('+$data.UI_Image+')'}" class="news-img image-normal"></div>
+					<div class="overflow-h">
+						<a data-bind="text: $data.Title, click: $root.EventDetail" class="fs18 title">数百用户建群吐槽iPhone7问题 客服称不影响正常使用</a>
+						<div data-bind="foreach: $data.Tags" class="label">
+							<span data-bind="text: $data">互联网</span>
+						</div>
+						<div class="date">
+							<span data-bind="text: $data.CreateDate">2016-07-26 15: 30</span>
+							<span class="ml10" data-bind="text: '跟贴('+$data.UI_CommentCount()+')'">跟贴（20）</span>
+							<span class="special-title mr12 ml15">专题</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div data-bind="visible: AttrListData.data().length < AttrListData.total" class="txt-center">
+			<button data-bind="click: EventLoadingMore"  type="button" class="v4-hr-morebtn">加载更多</button>
+		</div>
+		<!-- 没数据 -->
+		<div data-bind="visible: AttrLoading() && AttrListData.data().length < 1" style="margin-top: 10%;display: none;">
+			<div class="v4-news-nonedata"></div>
+			<div class="txt-center fs18 mt20">现在什么也没有～</div>
+			<div class="txt-center fs14 clrb8 mt10">可以通过“新增新闻”进行添加</div>
+		</div>
+	</div>
+	<div data-bind="visible: AttrStatus() == 1, attr: {id: CtrlEditID}">
+	</div>
+	
+	<div data-bind="visible: AttrStatus() == 2, attr: {id: CtrlDetailID}" class="right-contentA p50 bgff" style="display: none;">
+	</div>
+
+
+<script type="text/javascript">
+	$(function () {
+		var ctrl = $('#{{.GUID}}');
+		function T1_Manage_NewsList () {
+
+
+			this.AttrStatus = ko.observable(0);
+			this.CtrlEditID = tone.sys.guid();
+			this.CtrlDetailID = tone.sys.guid();
+			this.AttrLoading = ko.observable(true);
+
+			this.ListHead = ko.observableArray([{UI_IsSel : ko.observable(true),IsFirst : true,Name : '新闻',Type : 0}]);
+			this.AttrListData = {
+				skip : 0,
+				total : 0,
+				data : ko.observableArray([])
+			};
+			this.FuncDataInterface = {};
+			this.EventRemoveInterface = function  () {};
+			/*EventSaveInterface 发布新闻*/
+			this.EventSaveInterface = function  (){};
+
+			/**/
+
+			/*EventSelHead 开启切换标题*/
+			this.EventSelHead = function  (m,e) {
+				var lost = this.ListHead();
+				$.each(lost, function  (k, v) {
+					v.UI_IsSel(false);
+				});
+				m.UI_IsSel(true);
+				this.AttrStatus(m.Type);
+			}.bind(this);
+			/*EventClosehead 关闭标题*/
+			this.EventCloseHead = function  (m, e) {
+				this.ListHead.remove(m);
+				var ok = false;
+				$.each(this.ListHead(), function  (k, v) {
+					if(v.UI_IsSel()) {
+						ok = true;
+					}
+				});
+				if (!ok) {
+					this.ListHead()[0].UI_IsSel(true);
+					this.AttrStatus(this.ListHead()[0].Type);
+				}
+			}.bind(this);
+			/*EventSwitchHead 转换标题*/
+			this.EventSwitchHead = function  (m, e) {
+				var lost = this.ListHead();
+				$.each(lost, function  (k, v) {
+					v.UI_IsSel(false);
+				})
+				m.UI_IsSel(true);
+			}.bind(this);
+
+
+			/*EventDetail 新闻详细页*/
+			this.EventDetail = function  (m, e) {
+				var ok = true;
+				$.each(this.ListHead(), function  (k, v) {
+					if (v.Type == 2) {
+						ok = false;
+						v.UI_IsSel(true);
+					} else {
+						v.UI_IsSel(false);
+					}
+				})
+				if (ok) {
+					this.ListHead.push({UI_IsSel: ko.observable(true), IsFirst: false, Name: '查看新闻', Type: 2});
+				}
+				try {
+					this.FuncGetDetailHtml(m);/*调用新闻详细页对应方法*/
+				} catch(e){console.log(e)};
+			}.bind(this);
+			/*FuncGetDetailHtml 新闻详细页对应方法*/
+			this.FuncGetDetailHtml = function  (sel) {
+				tone.func.get('/t1yun/manage1/content/news/detail', function  (data) {
+					try {
+						var detail = $('#'+ this.CtrlDetailID);
+						detail.html(data);
+						var moudle = ko.contextFor(detail.children('div')[0]).$root;
+						moudle.FuncInit({id: sel.ID});
+						this.EventRemoveInterface = moudle.FuncRemove;
+						this.FuncDataInterface = moudle;
+						moudle.FuncBack = function  () {
+							this.FuncGetList(-1);
+							this.AttrStatus(0);
+						}.bind(this);
+						this.AttrStatus(2);
+					} catch(e){console.log(e)};
+				}.bind(this));
+			}
+
+			/*EventAddNews 新增新闻*/
+			this.EventAddNews = function  (m, e) {
+				var ok = true;				
+				$.each(this.ListHead(), function  (k, v) {
+					if(v.Type == 1) {
+						ok = false;
+						v.UI_IsSel(true);
+					} else {
+						v.UI_IsSel(false);
+					}
+				})
+				if (ok) {
+					this.ListHead.push({UI_IsSel: ko.observable(true), IsFirst: false, Name: '新增新闻', Type: 1});
+				}
+				var that = this;
+				this.FuncGetAddHtml(function  (data) {
+					var edit = $('#'+that.CtrlEditID);
+					edit.html(data);
+					setTimeout(function  () {
+						var moudle = ko.contextFor(edit.children('div')[0]).$root;
+						that.EventSaveInterface = moudle.EventSaveData;
+						moudle.FuncBack = function  () {
+							that.FuncGetList(-1);
+							that.AttrStatus(0);
+						};
+					}, 300);
+					that.AttrStatus(1);
+				})
+			};
+
+			/*FuncGetAddHtml 获取加载网页内容*/
+			this.FuncGetAddHtml = function  (callback) {
+				tone.func.get('/t1yun/manage1/content/news/edit', function  (data) {
+					if ($.type(callback) == "function") {
+						callback(data);
+					}
+				}.bind(this));
+			}
+
+			/*EventEdit 编辑新闻*/
+			this.EventEdit = function  () {
+				var ok = true;
+				$.each(this.ListHead(), function  (k, v) {
+					if (v.Type == 2) {
+						ok = false;
+						v.UI_IsSel(true);
+					} else {
+						v.UI_IsSel(false);
+					}
+					if (v.Type == 1) {
+						this.ListHead.remove(v);
+					}
+				}.bind(this));
+				if (ok) {
+					this.ListHead.push({UI_IsSel: ko.observable(true), IsFirst: false, Name: '编辑新闻', Type: 1});
+				}
+				/*调用对应方法*/
+				this.FuncEdit();
+			};
+			/*编辑新闻对应方法*/
+			this.FuncEdit = function  () {
+				this.FuncGetAddHtml(function  (data) {
+					var edit = $('#'+this.CtrlEditID);
+					edit.html(data);
+					var moudle = ko.contextFor(edit.children('div')[0]).$root;
+					this.EventSaveInterface = moudle.EventSaveData;
+					moudle.FuncBack = function  () {
+						this.FuncGetList(-1);
+						this.AttrStatus(0);
+					}.bind(this);
+					moudle.FuncInit(this.FuncDataInterface.AttrNews());
+					this.AttrStatus(1);
+				}.bind(this));
+			}
+
+			/*EventRemove 删除新闻*/
+			this.EventRemove = function  () {
+				var ok = true;
+				$.each(this.ListHead(), function  (k,v) {
+					if (v.Type == 2) {
+						list.remove(v);
+					} 
+					if (v.Type == 0){
+						v.UI_IsSel(true);
+					}
+				});bind(this);
+
+				/*调用对应方法*/
+				this.EventRemoveInterface();
+			};
+			
+			/*FuncGetList 获取信息列表*/
+			this.FuncGetList = function  (skip, callback) {
+				var url = 'news/admin/ordinary/list';
+				tone.ajaxJson(url, {skip: skip, limit: 20}, 'get', function  (data) {
+					try {
+						if (data.success != undefined && data.success == true) {
+							data = data.data;
+							this.AttrListData.skip = data.seek;
+							this.AttrListData.total = data.total;
+							$.each(data.data, function (k, v) {
+								v.UI_CommentCount = ko.observable(v.CommentCount);
+								v.UI_Image = 0;
+								if (v.Cover2.length > 0) {
+									v.UI_Image = "/{{.CurVersion}}/img/news?id="+v.Cover2;
+								}
+							});
+							if (skip == -1) {
+								this.AttrListData.data(data.data);
+								this.AttrLoading(false);
+							} else {
+								var tmp = this.AttrListData.data();
+								this.AttrListData.data([]);
+								$.merge(tmp, data.data);
+								this.AttrListData.data(tmp);
+							}
+						}
+					} catch(e){console.log(e)};
+				}.bind(this));
+			};
+
+
+
+			/**EventLoadingMore 加载更多*/
+			this.EventLoadingMore = function  () {
+				var len = this.AttrListData.data.length;
+				var total = this.AttrListData.total;
+				if (len < total) {
+					this.FuncGetList(this.AttrListData.skip);
+				}
+			}
+
+			
+
+			/*	Views内容显示*/
+			this.Views = function  () {
+				this.FuncGetList(-1);
+			};
+			this.Binding = function  (ctrl) {
+				ko.applyBindings(this, ctrl);
+				this.Views();
+			}
+			
+		}
+		var t1_Manage_Newslist = new T1_Manage_NewsList();
+		t1_Manage_Newslist.Binding(ctrl[0]);
+	})
+</script>
+</div>
