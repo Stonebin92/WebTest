@@ -1,0 +1,394 @@
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/knockout-3.4.1.js"></script>
+<style type="text/css">
+	body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite,code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul,li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+		margin: 0;
+		padding: 0;
+		border: none;
+		vertical-align: baseline;
+		font-family: '微软雅黑';
+	}
+	body {
+		/*background: #ddd;*/
+	}
+	#news {
+		width: 1080px;
+		margin: 0 auto;
+	}
+	a {
+		color: black;
+		text-decoration: none;
+	}
+	a:hover {
+		color: skyblue;
+		text-decoration: underline;
+	}
+	.right {
+		float: right;
+	}
+	.left {
+		float: left;
+	}
+	.headtap {
+		height: 26px;
+		border-bottom: 1px solid #e8e8e8;
+		/*margin: 0 auto;*/
+	}
+	.headtap-title {
+		display: inline-block;
+		border-top: 2px solid #59c1df;
+		border-left: 1px solid #e8e8e8;
+		border-right: 1px solid #e8e8e8;
+	}
+	.current {
+		/*width: 100%;*/
+		/*height: 150px;*/
+		border: 1px solid yellow;
+	}
+	.headtap span {
+		display: inline-block;
+		width: 100px;
+		text-align: center;
+		height: 24px;
+		font-size: 14px;
+		line-height: 24px;
+		padding: 0 8px;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+	.headtap span a {
+		float: right;
+	}
+	.head {
+		margin-top: 20px;
+	}
+	.head a {
+		background: #59c1df;
+		color: #fff;
+		display: inline-block;
+		width: auto;
+		height: 25px;
+		font-size: 14px;
+		line-height: 25px;
+		padding: 0 8px;
+		border-radius: 12px;
+	}
+	.head a:hover {
+		background: #40c1df!important;
+	}
+	.text-center {
+		text-align: center;
+	}
+	button.addmore {
+		width: 152px;
+		height: 25px;
+		font-size: 13px;
+		border-radius: 4px;
+		-webkit-border-radius: 4px;
+		margin-top: 30px;
+		border: 1px solid;
+		cursor: pointer;
+	}
+	button.addmore:hover {
+		background: #ddd;
+	}
+	.news-empty {
+		text-align: center;
+		margin-top: 20px;
+	}
+	.news-empty .empty-img {
+		width: 900px;
+		height: 100px;
+		margin: 0 auto;
+		background: url(img/none-datas.png) no-repeat top;/*http://a.hiphotos.baidu.com/baike/w%3D268%3Bg%3D0/sign=c4f3051fcabf6c81f7372bee8405d608/a1ec08fa513d2697019fe92a53fbb2fb4316d87d.jpg*/
+		background-size: contain;
+	}
+	.news-empty .empty-txt {
+		height: 25px;
+		line-height: 25px;
+		font-size: 16px;
+		margin-top: 15px;
+		color: grey;
+	}
+	.news-empty .empty-tips {
+		height: 25px;
+		line-height: 25px;
+		font-size: 16px;
+		margin-top: 15px;
+	}
+	.newsimg {
+		/*margin-top: 5px;*/
+		width: 80px;
+		height: 80px;
+		background-size: cover!important;
+	}
+	li {
+		list-style-type: none;
+	}
+	.news-content {
+		margin-top: 15px;
+	}
+	.detail ul li {
+		width: 285px;
+		height: 170px;
+		color: #222;
+		border-right: 1px solid #e6e6e6;
+		/*margin-left: 5px;
+		margin-top: 5px;*/
+		padding: 20px;
+		padding-bottom: 0;
+		background: #fff;
+	}
+	.detail a.title {
+		display: block;
+		margin-top: 32px;
+		font-size: 18px;
+		height: 21px;
+		overflow: hidden;
+		text-align: left;
+		margin-left: 26px;
+	}
+	li.left .overflow-h {
+		/*border-bottom: 1px dotted #e6e6e6;*/
+		/*overflow: hidden;*/
+	}
+	.detail .date {
+		margin-top: 16px;
+		width: 100%;
+		text-align: left;
+		border-bottom: 1px solid #e6e6e6;
+		padding-bottom: 15px
+	}
+	.detail .label {
+		margin-top: 28px;
+	}
+	.detail .label span {
+		background: url(./img/bookmark.png) no-repeat left;/*http://www.iconpng.com/png/devine2/bookmark.png*/
+		padding-left: 36px;
+		margin-left: 14px;
+		background-size: 36px;
+	}
+	.detail .date span {
+		font-size: 12px;
+		margin-left: 2px;
+	}
+	.date b {
+		font-weight: 500;
+		font-size: 12px;
+	}
+	.date span.theam-tip {
+		background: #ff695d;
+		color: #fff;
+		padding: 2px;
+		border-radius: 2px;
+	}
+</style>
+<div id="news">
+	<!-- 主页面内容 -->
+	<div data-bind="visible: AttrView() == 0">
+		<div class="headtap" data-bind="foreach: ListHead">
+			<div class="left headtap-title" data-bind="click: $root.EventSelHead, css: {'current': $data.UI_sel()}">
+				<span data-bind="text: $data.Title">新闻</span>
+				<a href="#" data-bind="visible: !$data.IsFirst, click: $root.EventCloseHead" class="close">x</a>
+			</div>
+		</div>
+		<!-- 新闻标题管理 -->
+		<div class="head">
+			<a href="#" data-bind="visible: AttrStatus() == 0, click: EventAddNews">新增新闻</a>
+			<a href="#" data-bind="visible: AttrStatus() == 2, click: EventEdit">编辑</a>
+			<a href="#" data-bind="visible: AttrStatus() == 2, click: EventDelete">删除</a>
+			<a href="#" data-bind="visible: AttrStatus() == 1, click: EventPush">发布新闻</a>
+		</div>
+
+		<!-- 新闻模板 -->
+		<script type="text/html" id="news-template">
+			<li class="left"  >
+				<div class="right newsimg" data-bind="style: {'background': 'url(' + $data.imgadd +')'}"></div>
+				<div class="overflow-h">
+					<a class="title" data-bind="text: title, click: $root.ShowDetails"></a>
+					<div class="label" >
+						<span data-bind="text: tags"></span>
+					</div>
+					<div class="date">
+						<span data-bind="text: CreateDate"></span><!-- 时间 -->
+						<b>跟贴(<span data-bind="text: numbers"></span>)</b><!-- 更贴 -->
+						<span data-bind="visible: $data.tip == 1" class="theam-tip">专题</span><!-- 专题 -->
+					</div>
+				</div>
+			</li>
+		</script>
+
+		<!-- 列表内容 -->
+		<div class="news-content" data-bind="visible: AttrStatus() == 1">
+			<!-- 具体内容 -->
+			<div class="detail">
+				<ul data-bind="template: {name: 'news-template', foreach: newsData}, visible: AttrLoading()==0"></ul>
+			</div>
+			<div style="clear:both;"></div>
+			<!-- 加载更多 -->
+			<div class="text-center" data-bind="" style="clear:both;">
+				<button type="button" data-bind="click: EventLoadMore, visible: AttrMoreView()" class="addmore">加载更多</button>
+			</div>
+			<!-- 内容为空 -->
+			<div class="news-empty" data-bind="visible: AttrEmptyView()">
+				<div class="empty-img"></div>
+				<div class="empty-txt">现在什么也没有</div>
+				<div class="empty-tips">可以通过"新增新闻"进行添加</div>
+			</div>
+		</div>
+	</div>
+	<!-- 子页面内容 -->
+	<div data-bind="" class="news-details">
+		
+	</div>
+</div>
+
+<script type="text/javascript" defer="defer">
+	
+	var control = $('#news');
+	
+	
+	function News_Model() {
+		this.AttrView = ko.observable(0);
+		this.AttrStatus = ko.observable(1);
+		this.AttrMoreView = ko.observable(1);
+		this.AttrEmptyView = ko.observable(1);
+
+		this.EventPush = ko.observable(0);
+		this.EventDelete = ko.observable(0);
+		this.EventEdit = ko.observable(0);
+		this.EventLoadMore = ko.observable(0);
+		this.AttrLoading = ko.observable(false);
+		this.newsData = ko.observableArray([]);
+		this.ListHead = ko.observableArray([{
+			UI_sel: ko.observable(true),
+			IsFirst: true,
+			Title: '新闻',
+			Type: 0
+		}]);
+		this.AttrListData = {
+			skip: 0,
+			total: 0,
+			data: ko.observableArray([])
+		};
+		var counter = 0;
+		var pageStart = 0;
+		var pageSize = 4;
+
+		this.EventSelHead = function (m, e) {
+			$.each(this.ListHead(), function (k, v) {
+				v.UI_sel(false);
+			});
+			m.UI_sel(true);
+			this.AttrStatus(m.Type);
+		}.bind(this);
+
+		this.EventCloseHead = function (m, e) {
+			this.ListHead.remove(m);
+			var ok = false;
+			$.each(this.ListHead(), function (k, v) {
+				if(v.UI_sel) {
+					ok = true;
+				}
+			});
+			if (!ok) {
+				this.ListHead()[0].UI_sel(false);
+				this.AttrStatus(this.ListHead()[0].Type);
+			}
+		}.bind(this);
+
+		this.EventSwitchHead = function (m, e) {
+			$.each(this.ListHead(), function (k, v) {
+				v.UI_sel(false);
+			})
+			m.UI_sel(false);
+		}.bind(this);
+
+		this.EventAddNews = function (m, e) {
+			alert('not ready well');
+		};
+
+		this.EventEdit = function (m, e) {
+			alert('not ready well');
+		};
+
+		this.EventDelete = function (m, e) {
+			alert('not ready well');
+		};
+
+		this.EventPush = function (m, e) {
+			alert('not ready well');
+		};
+
+		this.ShowDetails = function (m, e) {
+			$.ajax({
+				type: 'post',
+				url: 'detail.html',
+				dataType: 'html',
+				// data: parames,
+				success: function(data) {
+					$('.news-details').append(data);
+				}
+			});
+			alert(009);
+		};
+		
+
+		this.FuncGetData = function(pageStart, pageSize) {
+			$.ajax({
+				type: 'get',
+				url: 'f.json',
+				dataType: 'json'
+			}).then(function (response) {
+				var data = response.maindata.contentdata;
+				var sum = data.length;
+
+				 if (sum < 0) {
+				 	thenews_model.AttrEmptyView(1);
+				 } else {
+				 	thenews_model.AttrEmptyView(0);
+				 }
+
+				if (sum - pageStart < pageSize) {
+					pageSize = sum - pageStart;
+				}
+
+				for (var i = pageStart; i < (pageStart + pageSize); i++) {
+					if (response.success != undefined && response.success == true) {
+						$.each(data, function(k, v) {
+							v.imgadd = '';
+							if (v.image.length > 0) {
+								v.imgadd = 'img/' + v.image;
+							}
+						});
+					}
+					thenews_model.newsData.push(data[i]);
+				}
+
+				if ((pageStart + pageSize) >= sum) {
+					thenews_model.AttrMoreView(0);
+				} else {
+					thenews_model.AttrMoreView(1);
+				}
+			}, function () {
+				thenews_model.AttrMoreView(0);
+				thenews_model.AttrEmptyView(1);
+				alert('Ajax failed');
+			})
+		}
+		this.EventLoadMore = function () {
+			counter++;
+			pageStart = counter * pageSize;
+			this.FuncGetData(pageStart, pageSize);
+		}
+
+		this.Binding = function (control) {
+			ko.applyBindings(this, control);
+			this.FuncGetData(pageStart, pageSize);
+
+		}
+	}
+	
+	var thenews_model = new News_Model();
+	thenews_model.Binding(control[0]);
+</script>
