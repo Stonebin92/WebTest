@@ -1,0 +1,129 @@
+
+<style type="text/css">
+	body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big,cite,code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl,dt, dd, ol, ul,li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside,canvas, details,embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+		margin: 0;
+		padding: 0;
+		border: none;
+		vertical-align: baseline;
+		font-family: '微软雅黑';
+	}
+</style>
+<div id="details">
+	<div data-bind="" class="news-content">
+		<!-- 一般新闻 -->
+		<div data-bind="template: {name: 'detail-template', foreach: SimpleNews}"></div>
+
+		<!-- 专题新闻 -->
+	</div>
+</div>
+
+<!-- 一般新闻模板 -->
+<script type="text/html" id="detail-template">
+	<h3 data-bind="text: title">标题</h3>
+	<div class="detail-head">
+		<span data-bind="text: nick">昵称</span>
+		<span data-bind="text: CreateDate">发布日期</span>
+		<span><b data-bind="text: numbers"></b>条跟帖</span>
+	</div>
+	<h4 data-bind="text: content">内容</h4>
+	<div class="label">
+		<b>标签: <span data-bind="text: tags"></span></b>
+	</div>
+</script>
+
+<!-- 专题新闻模板 -->
+<script type="text/html" id="detail-template-theam">
+	<h3 data-bind="text: title">标题</h3>
+	<div class="detail-head">
+		<span data-bind="text: nick">昵称</span>
+		<span data-bind="text: CreateDate">发布日期</span>
+		<span>跟帖(<b data-bind="text: numbers"></b>)</span>
+		<span data-bind="visible: $data.tip == 1">专题</span>
+	</div>
+	<h4 data-bind="text: content">内容</h4>
+	<div class="label">
+		<span data-bind="text: tags">标签</span>
+	</div>
+</script>
+
+<script type="text/javascript">
+	var ctrl = $('#details');
+
+	function Detail_Model () {
+		this.AttrStatus = ko.observable(0);
+		this.TheamNews = ko.observableArray([]);
+		this.SimpleNews = ko.observableArray([]);
+		var counter = 0;
+		var pageStart = 0;
+		var pageSize = 4;
+
+		/*$.getJSON('f.json', function  (rre) {
+			var data = rre.maindata.contentdata;
+			detail_model.SimpleNews(data);
+		});*/
+
+		this.FuncGetData = function(pageStart, pageSize) {
+			$.ajax({
+				type: 'get',
+				url: 'f.json',
+				dataType: 'json'
+			}).then(function (response) {
+				var data = response.maindata.contentdata;
+				var sum = data.length;
+
+				if (sum - pageStart < pageSize) {
+					pageSize = sum - pageStart;
+				}
+
+				var i = pageStart; i < (pageStart + pageSize); i++;
+					
+					detail_model.SimpleNews.push(data[i]);
+			
+
+			}, function () {
+				alert('Ajax failed');
+			})
+		}
+
+		this.SimpleNews1 = [
+			{
+				title:"1果粒橙里面有虫子",
+				nickname: "5566",
+				Contents:"报道指出，如果这项研究属实，那么身材丰满有曲线的意大利女影星索菲亚·罗兰不仅容貌姣好，她拥有高智商的可能性也更高。而身材消瘦狭窄的好莱坞女星妮可·基德曼则缺乏必要的脂肪酸。尽管这些理论有待证实，但是心理学家保拉·霍尔说：“这项研究表明性感的女性更聪明，说明身材好的女性除了会养育孩子，可能还擅长其他一些事 情。”生理学专家哈里·维切尔博士也说：“到目前为止，我们可以说身材好的女性在西方社会是有优势的，其本质是她们在生理上是有优势的。”",
+				image:"news1.jpg",
+				tags:"asd",
+				CreateDate:"2016-12-8 13:21",
+				numbers:6,
+				tip:0
+			},
+			{
+				title:"2果粒橙里面有虫子",
+				nickname: "而我想",
+				Contents:"报道指出，如果这项研究属实，那么身材丰满有曲线的意大利女影星索菲亚·罗兰不仅容貌姣好，她拥有高智商的可能性也更高。而身材消瘦狭窄的好莱坞女星妮可·基德曼则缺乏必要的脂肪酸。尽管这些理论有待证实，但是心理学家保拉·霍尔说：“这项研究表明性感的女性更聪明，说明身材好的女性除了会养育孩子，可能还擅长其他一些事 情。”生理学专家哈里·维切尔博士也说：“到目前为止，我们可以说身材好的女性在西方社会是有优势的，其本质是她们在生理上是有优势的。”",
+				image:"news1.jpg",
+				tags:"asd",
+				CreateDate:"2016-12-8 13:21",
+				numbers:6,
+				tip:0
+			},
+			{
+				title:"3果粒橙里面有虫子",
+				nickname: "的萨法",
+				Contents:"报道指出，如果这项研究属实，那么身材丰满有曲线的意大利女影星索菲亚·罗兰不仅容貌姣好，她拥有高智商的可能性也更高。而身材消瘦狭窄的好莱坞女星妮可·基德曼则缺乏必要的脂肪酸。尽管这些理论有待证实，但是心理学家保拉·霍尔说：“这项研究表明性感的女性更聪明，说明身材好的女性除了会养育孩子，可能还擅长其他一些事 情。”生理学专家哈里·维切尔博士也说：“到目前为止，我们可以说身材好的女性在西方社会是有优势的，其本质是她们在生理上是有优势的。”",
+				image:"news1.jpg",
+				tags:"asd",
+				CreateDate:"2016-12-8 13:21",
+				numbers:6,
+				tip:0
+			}
+		]
+
+		this.bindings = function  (ctrl) {
+			ko.applyBindings(this, ctrl);
+			this.FuncGetData(pageStart, pageSize);
+		}
+
+	}
+	var detail_model = new Detail_Model();
+	detail_model.bindings(ctrl[0]);
+</script>
