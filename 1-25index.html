@@ -1,0 +1,1026 @@
+
+<!-- v4-guide v4-doit -->
+<div id="{{.GUID}}" class="v4-manage" data-bind="css:{'v4-guide':CtrlGuideStep()>0,'v4-doit':CtrlDoItStep()>0}">
+	<!-- leftbar -->
+	<div data-cover="true" class="v4-manage-leftbar">
+		<!-- 遮罩1 -->
+		<div class="v4-guide-leftmask"></div>
+		<!-- 系统 -->
+		<div data-bind="attr:{id:CtrlSysID}" class="sys-content">
+			<div data-bind="" class="v4-nav-group" style="color:#7fa9ff">人事</div>
+			<a data-bind="visible:OrganizeUserAdmin,css:{'current':CtrlGuideStep()==3,'doit':CtrlDoItStep()==3}" data-stepnum="3" data-url-manage="/t1yun/manage1/app/hr" class="options" title="员工">
+				<span class="member icon"></span>
+				<span class="txt">员工</span>
+				<!-- 引导 -->
+				<div class="v4-guide-content">
+					<div class="v4-guide-arrow"></div>
+					<div class="txt">
+						<div>第三步：</div>
+						<div>新建入职员工，或导入模板数据。</div>
+					</div>
+				</div>
+				<!-- 操作 -->
+				<div class="v4-doit-content">
+					<div>第三步：</div>
+					<div>新建入职员工，或导入模板数据</div>
+				</div>
+			</a>
+			<a data-bind="visible:OrganizeUserAdmin" data-url-manage="/t1yun/manage1/contract/index" class="options" title="合同">
+				<span class="contract icon"></span>
+				<span class="txt">合同</span> 
+			</a>
+			<a data-bind="visible:OrganizeUserAdmin" data-url-manage="/t1yun/manage1/report/report" class="options" title="报表">
+				<span class="forms icon"></span>
+				<span class="txt">报表</span>
+			</a> 
+			<a data-bind="visible:DeptAdmin" data-url-manage="/t1yun/manage1/sys/dept/join" class="options" title="邀请">
+				<span class="add icon"></span>
+				<span class="txt">邀请</span>
+			</a>
+			<a data-bind="visible:BaseDataAdmin" data-stepnum="2" data-url-manage="/t1yun/manage1/app/hrbase2"  class="options guide-current" title="辅助资料" style="margin-bottom:16px;">
+				<span class="icon auxiliary"></span>
+				<span class="txt">辅助资料</span>
+			</a>
+			<div class="v4-nav-group" style="color:#ffb67f;" data-bind="">考勤</div>
+			<a data-bind="visible:AskForLeaveAdmin" data-url-manage="/t1yun/manage1/attend/askforleave/index1" class="options" title="请假单">
+				<span class="leave icon"></span>
+				<span class="subnav">请假</span>
+			</a>
+			<a data-bind="visible:WorkOverTimeAdmin" data-url-manage="/t1yun/manage1/attend/workovertime/index1" class="options" title="加班单">
+				<span class="ontime icon"></span>
+				<span class="subnav">加班</span>
+			</a>
+			<a data-bind="visible:BusinessTripAdmin" data-url-manage="/t1yun/manage1/attend/businesstrip/index1" class="options" title="出差单">
+				<span class="trip icon"></span>
+				<span class="subnav">出差</span>
+			</a>
+			<a data-bind="visible:SignInAdmin" data-url-manage="/t1yun/manage1/attend/addcard/index1" class="options" title="签卡申请">
+				<span class="signin icon"></span>
+				<span class="subnav">签到</span>
+			</a>
+			<!--<a data-bind="visible:AttendanceAdmin()||InfoAdmin()" data-url-manage="/t1yun/manage1/attend/regular/workCircle" class="options" title="工作周期方案">
+				<span class="regular icon"></span>
+				<span class="subnav">工作周期方案</span>
+			</a>-->
+			<a data-bind="visible:AttendanceAdmin()||InfoAdmin()" data-url-manage="/t1yun/manage1/attend/regular/index" class="options" title="规则">
+				<span class="regular icon"></span>
+				<span class="subnav">规则</span>
+			</a>
+			 <!--<a data-bind="" data-url-manage="/t1yun/manage1/attend/regular/workTime" class="options" title="规则">
+				<span class="regular icon"></span>
+				<span class="subnav">考勤组规则</span>
+			</a>--> 
+			<a data-bind="visible:AttendanceAdmin" data-url-manage="/t1yun/manage1/attend/report/report" class="options" title="考勤报表">
+				<span class="forms icon"></span>
+				<span class="subnav">报表</span>
+			</a>
+			<a data-bind="visible:BaseDataAdmin" data-stepnum="2" data-url-manage="/t1yun/manage1/attend/auxiliaryfile/attendbase2"  class="options guide-current" title="辅助资料" style="margin-bottom:16px;">
+				<span class="icon auxiliary"></span>
+				<span class="txt">辅助资料</span>
+			</a>
+
+			<div class="v4-nav-group" style="color:#61b540;" data-bind="">办公</div>
+			<a data-bind="visible:OfficeAdmin" data-url-manage="/t1yun/manage1/office/cost/index" class="options" title="费用申请">
+				<span class="costapply icon"></span>
+				<span class="subnav">模板</span>
+			</a>
+			<a data-bind="visible:CostBillsShow" data-url-manage="/t1yun/manage1/office/cost/billsList" class="options" title="费用单据" style="margin-bottom:16px;">
+				<span class="billslist icon"></span>
+				<span class="subnav">单据</span>
+			</a>
+
+			<div class="v4-nav-group" style="color:#e88980;" data-bind="">内容</div>
+			<a data-bind="visible:NewsAdmin" data-url-manage="/t1yun/manage1/content/news/index" class="options" title="新闻">
+				<span class="news icon"></span>
+ 				<span class="txt">新闻</span>
+			</a>
+			<!-- <a data-bind="visible:NewsAdmin" data-url-manage="/t1yun/manage1/content/news/index" class="options" title="新闻">
+				<span class="news icon"></span>
+ 				<span class="txt">新闻</span>
+			</a>-->
+			<a data-bind="visible:ArtiAdmin" data-url-manage="/t1yun/manage1/arti/index" class="options" title="知识">
+				<span class="lore icon"></span>
+				<span class="txt">y知识</span>
+			</a>
+			<!-- 
+			<a data-bind="visible:JournalAdmin" data-url-manage="/t1yun/manage1/journal/managerPub" class="options" title="刊物">
+				<span class="public icon"></span>
+				<span class="txt">刊物</span>
+			</a>  -->
+			<a data-bind="visible:ArtiAdmin" data-url-manage="/t1yun/manage1/content/lore/index" class="options" title="知识">
+				<span class="lore icon"></span>
+				<span class="txt">l知识</span>
+			</a>
+			<a data-bind="visible:ArtiAdmin" data-url-manage="/t1yun/manage1/content/arti/index" class="options" title="知识">
+				<span class="lore icon"></span>
+				<span class="txt">新知识</span>
+			</a>
+			<a data-bind="visible:JournalAdmin" data-url-manage="/t1yun/manage1/content/journal/index" class="options" title="刊物">
+				<span class="public icon"></span>
+				<span class="txt">刊物</span>
+			</a>
+			<a data-bind="visible:NoticeAdmin" data-url-manage="/t1yun/manage1/notice/index" class="options" title="公告">
+				<span class="announce icon"></span>
+				<span class="txt">公告</span>
+			</a> 
+			<a data-bind="visible:NoticeAdmin" data-url-manage="/t1yun/manage1/msg/index" class="options" title="通知" style="margin-bottom:16px;">
+				<span class="announce icon"></span>
+				<span class="txt">通知</span>
+			</a>
+			<!--    门店通       -->
+			<div class="v4-nav-group" data-bind="" style="color:#dfba3c;">零售</div>
+			<a data-bind="visible:RetailAdmin()||SalesAdmin()" data-url-manage="/t1yun/manage1/store/salesslip" class="options" title="销售单">
+				<span class="icon sales"></span>
+				<span class="txt">销售单</span>
+			</a>
+			<a data-bind="visible:RetailAdmin" data-url-manage="/t1yun/manage1/store/report" class="options" title="报表">
+				<span class="forms icon"></span>
+				<span class="txt">报表</span>
+			</a> 
+			<a data-bind="visible:RetailAdmin" data-url-manage="/t1yun/manage1/store/store"  class="options" title="门店">
+				<span class="icon store"></span>
+				<span class="txt">门店</span>
+			</a>
+			<a data-bind="visible:RetailAdmin" data-url-manage="/t1yun/manage1/store/SupportPrice2"  class="options" title="价格维护" style="margin-bottom:16px;">
+				<span class="icon supportprice"></span>
+				<span class="txt">价格维护</span>
+			</a>
+			<div class="v4-nav-group" data-bind="" style="color:#61b540;">销售</div>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="" class="options">
+				<span class="icon pride"></span>
+				<span class="txt">价格管理</span>
+			</a>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="" class="options">
+				<span class="icon marketing"></span>
+				<span class="txt">营销策略</span>
+			</a>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="" class="options">
+				<span class="icon distribution"></span>
+				<span class="txt">分销策略</span>
+			</a>
+			<div class="v4-nav-group" data-bind="" style="color:#e88980;">进货</div>
+
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="" class="options" title="">
+				<span class="icon stock"></span>
+				<span class="txt">进货单</span>
+			</a>
+			<div class="v4-nav-group" data-bind="" style="color:#dfba3c;">库存</div>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="" class="options" title="">
+				<span class="icon shipment"></span>
+				<span class="txt">出库单</span>
+			</a>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="" class="options" title="">
+				<span class="icon cargo"></span>
+				<span class="txt">入库单</span>
+			</a>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="" class="options" title="">
+				<span class="icon loan"></span>
+				<span class="txt">借出单</span>
+			</a>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="" class="options" title="">
+				<span class="icon borrow"></span>
+				<span class="txt">借入单</span>
+			</a>
+			<a data-bind="visible:0&&(RetailAdmin||SalesAdmin())" data-url-manage="" class="options" title="">
+				<span class="icon return"></span>
+				<span class="txt">退货单</span>
+			</a>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="" class="options" title="">
+				<span class="icon inventory"></span>
+				<span class="txt">库存盘点</span>
+			</a>
+			<div class="v4-nav-group" data-bind="" style="color:#59a2e5;">基础资料</div>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="/t1yun/manage1/store/unitgroup"  class="options" title="计量单位组">
+				<span class="icon"></span>
+				<span class="txt">计量单位组</span>
+			</a>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="/t1yun/manage1/store/base"  class="options" title="门店基础资料">
+				<span class="icon"></span>
+				<span class="txt">门店基础资料</span>
+			</a>
+			<a data-bind="visible:RetailAdmin||SalesAdmin()" data-url-manage="/t1yun/manage1/store/goods/index"  class="options" title="商品">
+				<span class="icon product"></span>
+				<span class="txt">商品</span>
+			</a>
+
+			 <a data-bind="visible:0&RetailAdmin" data-url-manage="/t1yun/manage1/store/widgets"  class="options" title="商品">
+				<span class="icon product"></span>
+				<span class="txt">控件</span>
+			</a> 
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="/t1yun/manage1/store/goods/GoodsSetSku"  class="options" title="xxx">
+
+				<span class="icon product"></span>
+				<span class="txt">xxx</span>
+			</a>
+			<a data-bind="visible:0&&RetailAdmin" data-url-manage="/t1yun/manage1/store/Store2" class="options" title="">
+				<span class="icon product"></span>
+				<span class="txt">商品2</span>
+			</a>
+			<a data-bind="visible:RetailAdmin" data-url-manage="/t1yun/manage1/store/customer/customer" class="options" title="">
+				<span class="icon client"></span>
+				<span class="txt">客户</span>
+			</a>
+			<a data-bind="visible:RetailAdmin" data-url-manage="/t1yun/manage1/store/customer/supplier" class="options" title="">
+				<span class="icon supplier"></span>
+				<span class="txt">供应商</span>
+			</a>
+			<a data-bind="visible:RetailAdmin" data-url-manage="/t1yun/manage1/store/activity" class="options" title="">
+				<span class="icon activity"></span>
+				<span class="txt">主题活动</span>
+			</a>
+			<a data-bind="visible:BaseDataAdmin" data-stepnum="2" data-url-manage="/t1yun/manage1/store/base2"  class="options guide-current" title="辅助资料" style="margin-bottom:16px;">
+				<span class="icon auxiliary"></span>
+				<span class="txt">辅助资料</span>
+			</a>
+			
+			<div class="v4-nav-group" style="color:#ffb67f;" data-bind="if:ServiceAdmin,visible:ServiceAdmin">设置</div>
+			<a data-bind="visible:ManagerAdmin" data-url-manage="/t1yun/manage1/workflow/workFlow" class="options" title="工作流">
+				<span class="app icon"></span>
+				<span class="txt">流程</span>
+			</a>
+			<a data-bind="visible:AuthAdmin,css:{'current':CtrlGuideStep()==4,'doit':CtrlDoItStep()==4}" data-stepnum="4" data-url-manage="/t1yun/manage1/auth/index" class="options open" title="权限"><!-- current代表点击当前 -->
+
+				<span class="power icon"></span>
+				<span class="txt">授权</span>
+				<div data-bind="click:function(){return},clickBubble:false" class="v4-guide-content">
+					<div class="v4-guide-arrow"></div>
+					<div class="txt">
+						<div>最后一步：</div>
+						<div>授予员工相应的权限。</div>
+						<div class="clearfix">
+							<button data-bind="click:FuncEndPlay,clickBubble:false" class="btn">知道了</button>
+							<button data-bind="click:FuncRePlay,clickBubble:false" class="btn">重来一次</button>
+						</div>
+					</div>
+				</div>
+				<!-- 操作 -->
+				<div class="v4-doit-content">
+					<div>最后一步：</div>
+					<div>授予员工相应的权限</div>
+				</div>
+			</a>
+			<a data-bind="visible:DeptAdmin,css:{'current':CtrlGuideStep()==1,'doit':CtrlDoItStep()==1}" data-stepnum="1" data-url-manage="/t1yun/manage1/sys/dept/deptManage" class="options" title="组织">
+				<span class="organize icon"></span>
+				<span class="txt">组织</span>
+				<div class="v4-guide-content">
+					<div class="v4-guide-arrow"></div>
+					<div class="txt">
+						<div>第一步：</div>
+						<div>新建组织架构。</div>
+					</div>
+				</div>
+				<!-- 操作 -->
+				<div class="v4-doit-content">
+					<div>第一步：</div>
+					<div>新建入职员工，或导入模板数据</div>
+				</div>
+			</a>
+			<a data-bind="visible:ManagerAdmin" data-url-manage="/t1yun/manage1/templatedesign/printSet" class="options" title="打印设置" style="margin-bottom:16px;">
+				<span class="print icon"></span>
+				<span class="txt">打印</span>
+			</a>
+
+			<div class="v4-nav-group" style="color:#61b540;" data-bind="">系统</div>
+			<a data-bind="visible:ManagerAdmin" data-url-manage="/t1yun/manage1/sys/extapp/extAppNew" class="options" title="应用">
+				<span class="app icon"></span>
+				<span class="txt">应用</span>
+			</a>
+			<a data-bind="visible:ServiceAdmin" data-url-manage="/t1yun/manage1/store/problemback"  class="options" title="问题反馈" >
+				<span class="icon question"></span>
+				<span class="txt">反馈</span>
+			</a>
+			<a data-bind="visible:ManagerAdmin()||RetailAdmin()" data-url-manage="/t1yun/manage1/store/customer/approve"  class="options" title="申请">
+				<span class="icon apply"></span>
+				<span class="txt">申请</span>
+			</a>
+			<a data-bind="visible:BaseDataAdmin" data-stepnum="2" data-url-manage="/t1yun/manage1/sys/extapp/sysbase2"  class="options guide-current" title="辅助资料" style="margin-bottom:16px;">
+				<span class="icon auxiliary"></span>
+				<span class="txt">辅助资料</span>
+			</a>
+		</div>
+	</div>
+	<!-- 遮罩2 -->
+	<div class="v4-guide-rightmask"></div>
+	<!-- 内容 -->
+	<div data-bind="attr:{id:CtrlID}" class="v4-manage-right">
+
+	</div>
+	
+<!-- 侧边弹出层(页面需要添加组织时调用) -->
+<div class="v4-bar-pop v4-manage-pop pop-organize" style="display:none;">
+	<div class="head">
+		<button class="close right" title="关闭"></button>
+		<span>选择组织</span>
+	</div>
+	<div class="list">
+		<a class="item">
+			<span class="expand recieve-">公司名称</span><!-- expand是展开图标，recieve是收缩 -->
+		</a>
+		<a class="item" style="padding-left:20px;">
+			<span class="empty expand recieve">公司名称</span><!-- empty特定有的class不可删除，expand是展开图标，recieve是收缩 -->
+		</a>
+		<a class="item" style="padding-left:40px;">
+			<span class="empty expand- recieve-">公司名称</span><!-- empty特定有的class不可删除，expand是展开图标，recieve是收缩 -->
+		</a>
+	</div>
+</div>
+
+	<!-- 组织查询侧边栏 -->
+	<div data-bind="attr:{id:CtrlDeptID}" class="ui-organize-popup" style="display:none;">
+		<div class="title-div">
+			<div class="clearfix">
+				<span class="name left">组织查询</span>
+				<button data-bind="click:EventHideDept" type="button" title="关闭" class="close right"></button>
+			</div>
+			<div class="clearfix mt10">
+				<span data-bind="css:{'checkboxed':AttrAllMember,'checkbox':AttrAllMember()==false},click:function(m,e){EventSelAll(m,e,!$root.AttrAllMember());}" 
+					class="checkboxed- checkbox-"></span>
+				<span>包含子级组织</span>
+			</div>
+		</div>
+		<div class="content" data-bind="template:{foreach:AttrDept.list,name:'manage-template-dept'}" style="top: 76px;"></div>
+	</div>
+	<script>
+		$(function(){
+			var $navbtn = $(".v4-nav-btn");
+			//点击收缩栏
+			$navbtn.click(function(){
+				$(".v4-manage").toggleClass("v4-leftbar-shrink-manage");
+				if($(".v4-manage").hasClass("v4-leftbar-shrink-manage")){
+					$navbtn.attr("title","打开");
+				}else{
+					$navbtn.attr("title","收缩");
+				}
+			});
+			});
+	</script>
+	<script type="text/html" id="manage-template-dept">
+		<div data-bind="style:{'padding-left':$data.UI_Children().length>0?'0px':'0px'}">
+			<div ui-dept="true" class="btn" data-bind="css:{'current':$data.ID==$root.AttrDept.current().ID,'edit-unread':$data.Authize==false},click:$root.EventSelDept">
+				<!--展开-->
+				<a data-bind="visible:$data.UI_Hide()&&$data.UI_Children().length>0,click:$root.EventHideChildren,clickBubble:false" class="ui-organize-popup-img spread" title="展开" style="display:none;"></a>
+				<!--收缩-->
+				<a data-bind="visible:(!$data.UI_Hide())&&$data.UI_Children().length>0,click:$root.EventHideChildren,clickBubble:false" class="ui-organize-popup-img shink" title="收起"></a>
+				<span data-bind="text:$data.CircleName">组织</span>
+			</div>
+			<div data-bind="visible:!$data.UI_Hide(),template:{foreach:$data.UI_Children,name:'manage-template-dept'}" class="nxt-level">
+			</div>
+		</div>
+	</script>
+	
+<script type="text/javascript">
+	/*Edit at 2016.10.18 by yzy for cost bills:Add function:FuncGetTempList
+															 Add attr:ShowCost
+	*/
+	tone.sys.loadjs('{{.StaticServer}}/common/cssAndjs/lib/jquery-citypickers/js/city-picker.data.js',false);
+	tone.sys.loadjs('{{.StaticServer}}/common/cssAndjs/lib/jquery-citypickers/js/city-picker.js',false);
+	$(function(){
+		var ctrl = $('#{{.GUID}}');
+		function Manage_Manage_Index_V21(){
+			this.CtrlID = tone.sys.guid();
+			this.CtrlAppID = tone.sys.guid();
+			this.CtrlSysID = tone.sys.guid();
+			this.CtrlDeptID = tone.sys.guid();
+			this.CtrlGuideStep=ko.observable(0);//0start -1end
+			this.CtrlDoItStep=ko.observable(0);//0cancle 1234
+			this.ShowCost = ko.observable(true);//true||false  显示||隐藏  add by yzy in 2016.10.18
+
+			//权限缓存 {join8(表单＋权限码1增/2改/4删/8查):bool}
+			this.BillAuth={};
+			//权限缓存 {join8(表单＋权限码1增/2改/4删/8查):[组织树]}
+			this.DeptTrees={};
+			this.AllDept={};
+			// 权限组织[{UI_Children,UI_Hide}]
+			this.AttrDept = {list:ko.observableArray([]),current:ko.observable({})};
+			// 是否查询子组织
+			this.AttrAllMember = ko.observable(true);
+
+			//是否企业合作伙伴
+			this.IsPartner=ko.observable(false);
+			//企业管理员
+			this.CompanyAdmin=ko.pureComputed(function() {
+			    return $.inArray(500,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//管理专员
+			this.ManagerAdmin=ko.pureComputed(function() {
+			    return this.CompanyAdmin()||$.inArray(101,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//店长管理员
+			this.RetailAdmin=ko.pureComputed(function() {
+			    return tone.views.OrganizeService['retail']()&&(this.ManagerAdmin()||$.inArray(110,tone.views.AttrUser().auth())!=-1);
+			}, this);
+			//导购员 用于控制添加导购菜单
+			this.SalesAdmin=ko.pureComputed(function() {
+			    return tone.views.OrganizeService['retail']()&&($.inArray(109,tone.views.AttrUser().auth())!=-1||$.inArray(110,tone.views.AttrUser().auth())!=-1);
+			}, this);
+			
+			//新闻管理员
+			this.NewsAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(501,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//知识管理员
+			this.ArtiAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(503,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//刊物管理员
+			this.JournalAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(502,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//公告管理员
+			this.NoticeAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(506,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//视频管理员
+			this.VedioAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(505,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//内容管理员
+			this.ContentAdmin = ko.pureComputed(function() {
+			    return this.VedioAdmin()||this.NoticeAdmin()||this.JournalAdmin()||this.ArtiAdmin()||this.NewsAdmin();
+			}, this);
+			//服务专员
+			this.ServiceAdmin = ko.pureComputed(function() {
+			    return  this.ManagerAdmin()||$.inArray(108,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//授权管理員
+			this.AuthAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin();
+			}, this);
+			
+			//组织管理员
+			this.DeptAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(504,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//员工信息管理员
+			this.OrganizeUserAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(105,tone.views.AttrUser().auth())!=-1||$.inArray('organizeuser',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//员工入职管理员
+			this.JoinAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(105,tone.views.AttrUser().auth())!=-1||$.inArray('join',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//员工异动管理员
+			this.MoveAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(105,tone.views.AttrUser().auth())!=-1||$.inArray('move',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//员工离职管理员
+			this.WorkoffAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(105,tone.views.AttrUser().auth())!=-1||$.inArray('workoff',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//岗位管理员
+			this.PositionAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(105,tone.views.AttrUser().auth())!=-1||$.inArray('position',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			//合同记录管理员
+			this.ContractrecordsAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(105,tone.views.AttrUser().auth())!=-1||$.inArray('position',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			
+			//人事管理管理员
+			this.HrAdmin = ko.pureComputed(function() {
+			    return this.JoinAdmin()||this.OrganizeUserAdmin()||this.MoveAdmin()||this.WorkoffAdmin()||this.PositionAdmin()||this.ContractrecordsAdmin();
+			}, this);
+			
+			this.AskForLeaveAdmin = ko.pureComputed(function() {
+			    return tone.views.OrganizeService['attendance']()&&(this.ManagerAdmin()||
+					$.inArray(104,tone.views.AttrUser().auth())!=-1||$.inArray('askforleave',tone.views.AttrUser().auth())!=-1);
+			}, this);
+			this.WorkOverTimeAdmin = ko.pureComputed(function() {
+			    return tone.views.OrganizeService['attendance']()&&(this.ManagerAdmin()||
+				$.inArray(104,tone.views.AttrUser().auth())!=-1||$.inArray('workovertime',tone.views.AttrUser().auth())!=-1);
+			}, this);
+			this.BusinessTripAdmin = ko.pureComputed(function() {
+			    return tone.views.OrganizeService['attendance']()&&(this.ManagerAdmin()||
+				$.inArray(104,tone.views.AttrUser().auth())!=-1||$.inArray('businesstrip',tone.views.AttrUser().auth())!=-1);
+			}, this);
+			this.RegistrationCardAdmin = ko.pureComputed(function() {
+			    return tone.views.OrganizeService['attendance']()&&(this.ManagerAdmin()||
+				$.inArray(104,tone.views.AttrUser().auth())!=-1||$.inArray('registrationcard',tone.views.AttrUser().auth())!=-1);
+			}, this);
+			this.SignInAdmin = ko.pureComputed(function() {
+			    return tone.views.OrganizeService['attendance']()&&(this.ManagerAdmin()||
+				$.inArray(104,tone.views.AttrUser().auth())!=-1||$.inArray('addcard',tone.views.AttrUser().auth())!=-1);
+			}, this);
+			this.InfoAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray(111,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.AttendanceAdmin = ko.pureComputed(function() {
+				return this.SignInAdmin()||this.RegistrationCardAdmin()||this.BusinessTripAdmin()||this.WorkOverTimeAdmin()||this.AskForLeaveAdmin();
+			}, this);
+			this.OfficeAdmin = ko.pureComputed(function() {
+			    return tone.views.OrganizeService['office']()&&this.InfoAdmin();
+			}, this);
+
+			this.JobAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('job',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			
+			//this.DeptAdmin = ko.pureComputed(function() {
+			//    return $.inArray('dept',tone.views.AttrUser().auth())!=-1;
+			//}, this);
+			this.AskForLeaveTypeAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('askforleavetype',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.HolidayAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('holiday',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.WorkTimeRuleAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('worktimerule',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.WorkOverTimeTypeAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('workovertimetype',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.BusinessTripTypeAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('businesstriptype',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.SignInTypeAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('signintype',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.WorkFlowAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('workflow',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.EmpTypeAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('emptype',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.ContractTypeAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('contracttype',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.NoticeTypeAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('noticetype',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.PositionTypeAdmin = ko.pureComputed(function() {
+			    return this.ManagerAdmin()||$.inArray('positiontype',tone.views.AttrUser().auth())!=-1;
+			}, this);
+			
+			this.BaseDataAdmin = ko.pureComputed(function() {
+				var tmp=this.HolidayAdmin()||this.AskForLeaveTypeAdmin()||this.DeptAdmin()||this.JobAdmin()||this.SignInTypeAdmin()||this.BusinessTripTypeAdmin();
+				tmp=tmp||this.WorkOverTimeTypeAdmin()||this.WorkTimeRuleAdmin()||this.EmpTypeAdmin()||this.ContractTypeAdmin()||this.NoticeTypeAdmin()||this.PositionTypeAdmin();
+				return this.WorkFlowAdmin()||tmp||$.inArray(111,tone.views.AttrUser().auth())!=-1;
+			}, this);
+			this.SysAdmin = ko.pureComputed(function() {
+			    return this.CompanyAdmin()||this.BaseDataAdmin();
+			}, this);
+			
+			this.CostBillsShow = ko.pureComputed(function(){
+				return this.OfficeAdmin()&&this.ShowCost();
+			},this);
+			
+			
+			/*add by yzy in 2016.10.18*/
+			this.FuncGetTempList=function(callback){
+				var dtd = $.Deferred();
+		
+				var url = '/common/queryfilter/captemplate/0/1';
+				tone.ajaxJson(url,{filter:JSON.stringify([{"status__exact":1}])},'post',function(data){
+					if(data.success!=undefined&&data.success==true){
+						if(data.data.length>0){
+							dtd.resolve();
+							//this.ShowCost(true);
+						}else{
+							dtd.reject();
+						}
+					}else{
+						dtd.reject();
+					}
+				}.bind(this));
+				$.when(dtd).done(function(){this.ShowCost(true);}.bind(this)).fail(function(){
+					this.ShowCost(false);
+				}.bind(this));
+			};
+			//初始化页面
+			this.FuncInit=function(){
+			};
+			//组织结构数据处理
+			this.FuncMakeData = function(data){
+				var tmp_data=[];
+				if(data!=undefined&&$.isArray(data)&&data.length>0){
+					$.each(data,function(index,item){
+							this.AllDept[item['ID']]=$.extend(true,{},item);
+							item.UI_Hide=ko.observable(true);
+							item.UI_Children=ko.observableArray([]);
+							if(item.Children!=undefined&&item.Children.length>0){
+								item.UI_Children(this.FuncMakeData(item.Children));
+							}
+							tmp_data.push(item);
+					}.bind(this));
+				}
+				return tmp_data;
+			};
+			/*@see:获取选中组织ID*/
+			this.FuncGetDeptID = function(){
+				return this.AttrDept.current().ID;
+			};
+			/*@see:获取选中组织及其子组织的ID数组*/
+			this.FuncGetDeptIDs = function(){
+				return this.funcGetTreeID(this.AttrDept.current());
+			};
+			//获取当前ID及子节点ID的数组
+			this.funcGetTreeID=function(data){
+				var tmp_list=[];
+				if(data.ID!=undefined){
+					tmp_list.push(data.ID);
+					$.each(data.UI_Children(),function(index,item){
+						tmp_list=$.merge(tmp_list,this.funcGetTreeID(item));
+					}.bind(this));
+				}
+				return tmp_list;
+			};
+			this.FuncShowGuide=function(){
+				var step = this.CtrlGuideStep();
+				if(step<=0){
+					return
+				}
+				var setIntervalFun=null;
+				setIntervalFun=setInterval(function(){
+					step++;
+					if(step>=4){
+						clearInterval(setIntervalFun);
+					}
+					this.CtrlGuideStep(step);
+				}.bind(this),2500)
+			};
+			this.FuncRePlay=function(){
+				this.CtrlGuideStep(1);
+				this.FuncShowGuide();
+			}
+			this.FuncEndPlay=function(){
+				this.CtrlGuideStep(0);
+				this.FuncSetGuide('guide',tone.views.AttrUser().CompanyID,0);
+				this.FuncSetGuide('doit',tone.views.AttrUser().CompanyID,1);
+				this.CtrlDoItStep(1)
+				setTimeout(function(){
+					$('[data-cover="true"]').addClass('v4-uncursor-mask')
+				},3000)
+			}
+			this.FuncSetGuide=function(type,comid,code){
+				var url = '/step/set/guide';
+				if(type=="doit"){
+					url="/step/set/doit";
+				}
+				tone.ajaxJson(url,{CompanyID:comid,IType:'com',Code:code},'get',function(data){
+					if(data.success==true&&data.data&&data.data.data){
+						
+					}
+				}.bind(this));
+			}
+			/*
+			 *@see:获取权限数据，数据会产生缓存，因些可以频繁调用
+			 *@param itemtype:join/dept/... 单据类型
+			 *@param action:1增/2改/3删/8查 权限
+			 *@param callback:回调 callback({data:bool,success:bool})
+			 */
+			this.FuncBillAuth = function(itemtype,action,callback){
+				if(action==undefined||$.inArray(action,[1,2,4,8])==-1){
+					try{
+						callback({success:false});
+					}catch(e){
+						console.log(e);
+					}
+					return;
+				}
+				var key=itemtype+action+'';
+
+				var dtd = $.Deferred();
+				if(this.BillAuth[key]!=undefined){
+					dtd.resolve();
+				}else{
+					var url='/authize/'+itemtype+'/showbutton?marks='+action;
+					tone.ajaxJson(url,{},'get',function(data){
+						if(data.success==true&&data.data){
+							if(data.data.length>0&&data.data[0].mark==action){
+								this.BillAuth[key]=!!data.data[0].show;
+							}else{
+								this.BillAuth[key]=false;
+							}
+							dtd.resolve();
+						}else{
+							dtd.reject();
+						}
+					}.bind(this));
+				}
+				$.when(dtd).done(function(){
+					try{callback({success:true,data:this.BillAuth[key]});}catch(e){console.log(e);}
+				}.bind(this)).fail(function(){
+					try{callback({success:false});}catch(e){console.log(e);}
+				});
+			};
+			
+			
+			/*
+			 *@see:获取组织树数据，数据会产生缓存，因些可以频繁调用
+			 *@param itemtype:join/dept/... 单据类型
+			 *@param action:1增/2改/3删/8查 权限
+			 *@param callback:回调 callback(0失败/1成功)
+			 *@param hidebtn:bool 隐藏顶部按钮
+			 */
+			this.FuncDeptTree = function(itemtype,action,callback,hidebtn){
+				$('#manage-index-btn-selall').show();
+				if(hidebtn){
+					$('#manage-index-btn-selall').hide();
+				}
+				if(action==undefined||$.inArray(action,[1,2,4,8])==-1){
+					action=8;
+				}
+				if(callback==undefined||$.isFunction(callback)==false){
+					callback=function(d){};
+				}
+				var key=itemtype+action+'';
+				var dtd = $.Deferred();
+				if(this.DeptTrees[key]!=undefined&&$.isArray(this.DeptTrees[key])){
+					dtd.resolve();
+				}else{
+					//tone.ajaxJson('/appsv2/admin/organize/circle_tree',{},'get',function(data){
+					var url='';
+					var enableAuthize = true;
+					if(itemtype=='dept1'){
+						url='/V2/authize/getauthdepartmenttree?auth=504';
+					}else{
+						url='/authize/'+itemtype+'/getdepartmenttree?mark='+action;
+					}
+					if(itemtype=='base'){
+						enableAuthize = false;
+					}
+					tone.ajaxJson(url,{enableAuthize:enableAuthize},'get',function(data){
+						if(data.success==true&&data.data&&data.data.data){
+							this.AllDept={};
+							this.DeptTrees[key]=this.FuncMakeData(data.data.data);
+							dtd.resolve();
+						}else{
+							dtd.reject();
+						}
+					}.bind(this));
+				}
+				$.when(dtd).done(function(){
+					idata=this.DeptTrees[key];
+					this.AttrDept.list(idata);
+					$.each(this.AttrDept.list(),function(i,item){
+						item.UI_Hide(false);
+					});
+					if(this.AttrDept.list().length>0){
+						this.AttrDept.current(this.funcFirstDept());
+					}
+					try{callback(1);}catch(e){console.log(e);}
+				}.bind(this)).fail(function(){
+					tone.views.FuncAddTip('获取组织失败');
+					try{callback(0);}catch(e){console.log(e);}
+				});
+			};
+			//获取一个有权限的组织
+			this.funcFirstDept=function(data){
+				if(data==undefined){
+					data=this.AttrDept.list();
+				}
+				var tmp={};
+				$.each(data,function(i,item){
+					if(item.Authize==true){
+						tmp=item;
+						return false;
+					}
+					tmp = this.funcFirstDept(item.UI_Children?item.UI_Children():[]);
+					if(tmp.ID!=undefined){
+						return false;
+					}
+				}.bind(this));
+				return tmp;
+			};
+			/* data={deptid:id,all:bool}
+			 *@see:修改选中组织后的回调
+			 *@param data:{dpetid:组织ID,all:bool是否选中子组织}
+			 */
+			this.FuncSelDeptCallback = function(data){};
+			this.EventSelAll = function(m,e,type){
+				if(type==true){
+					//选择查询全部成员
+					this.AttrAllMember(true);
+					this.FuncSelDeptCallback({deptid:this.FuncGetDeptID(),all:this.AttrAllMember()});
+				}else{
+					//选择查询圈子内成员
+					this.AttrAllMember(false);
+					this.FuncSelDeptCallback({deptid:this.FuncGetDeptID(),all:this.AttrAllMember()});
+				}
+			};
+			this.EventSelDept = function(m,e){
+				if(!m.Authize){
+					return;
+				}
+				this.AttrDept.current(m);
+				try{
+					this.FuncSelDeptCallback({deptid:this.FuncGetDeptID(),all:this.AttrAllMember()});
+				}catch(e){console.log(e);}
+			}.bind(this);
+			
+			this.EventHideChildren = function(m,e){
+				m.UI_Hide(!m.UI_Hide());
+			};
+			/*
+			 *@see: 显示组织栏
+			 */
+			this.FuncShowDept = function(){
+				//this.AttrDeptView(1);
+				var el = $('#'+this.CtrlDeptID);
+				// ("slow","normal", or "fast")或表示动画时长的毫秒数值(如：1000)
+				el.show('normal','linear');
+			};
+			/*
+			 *@see: 隐藏组织栏
+			 */
+			this.FuncHideDept = function(){
+				//this.AttrDeptView(0);
+				var el = $('#'+this.CtrlDeptID);
+				// ("slow","normal", or "fast")或表示动画时长的毫秒数值(如：1000)
+				el.hide('fast','linear');
+			};
+			/*@see :设置当前选中组织，该方法不会调用选中组织的回调方法
+			 *@param deptid:string 选中组织ID
+			 *@return :bool是否成功
+			 */
+			this.FuncSetDept = function(deptid,data){
+				if(this.AttrDept.current().ID==deptid){
+					return true;
+				}
+				if(data==undefined){
+					data=this.AttrDept.list();
+				}
+				var result=false;
+				$.each(data,function(i,item){
+					if(item.ID==deptid){
+						this.AttrDept.current(item);
+						result=true;
+						return false;
+					}
+					if(this.FuncSetDept(deptid,item.UI_Children())){
+						result=true;
+						return false;
+					}
+				}.bind(this));
+				return result;
+			};
+			//获取当前选中的组织
+			this.FuncGetDept = function(){
+				return this.AttrDept.current();
+			};
+			this.EventHideDept = function(){
+				this.FuncHideDept();
+			};
+			this.EventSelNav = function(m,e,nav){
+				$(e.target).parent().children().removeClass('current');
+				$(e.target).addClass('current');
+				if(nav=='app'){
+					$('#'+this.CtrlSysID).hide('fast');
+					$('#'+this.CtrlAppID).show('fast');
+				}else{
+					$('#'+this.CtrlAppID).hide('fast');
+					$('#'+this.CtrlSysID).show('fast');
+				}
+			};
+			this.FuncGetStep=function(){
+				tone.ajaxJson('/step/query',{CompanyID:tone.views.AttrUser().CompanyID},'get',function(data){
+					if(data.success!=undefined&&data.success==true){
+						if(data.data.guide){
+							for(k in data.data.guide){
+								if(k=='com'){
+									this.CtrlGuideStep(data.data.guide.com.Step);
+								}
+							}
+						}
+						if(data.data.doit){
+							for(k in data.data.doit){
+								if(k=='com'){
+									try{
+										this.CtrlDoItStep(data.data.doit.com.Step);
+									}catch(e){
+										console.log(e)
+									}
+								}
+							}
+						}
+						//this.CtrlGuideStep(data.data.guide);
+						//this.CtrlDoItStep(data.data.doit);
+						//if(data.data.gui)
+						if(this.CtrlGuideStep()!=0){
+							//this.CtrlGuideStep(0);
+							this.CtrlDoItStep(0);
+						}
+						if(this.CtrlDoItStep()!=0){
+							setTimeout(function(){
+								$('[data-cover="true"]').addClass('v4-uncursor-mask')
+							},3000)
+						}
+						this.FuncShowGuide();
+					}
+				}.bind(this));
+			}
+			this.FuncDelStep=function(){
+				tone.ajaxJson('/step/remove/guide',{CompanyID:tone.views.AttrUser().CompanyID,IType:'com'},'post',function(data){
+					if(data.success!=undefined&&data.success==true){
+						
+					}
+				}.bind(this));
+				tone.ajaxJson('/step/remove/doit',{CompanyID:tone.views.AttrUser().CompanyID,IType:'com'},'post',function(data){
+					if(data.success!=undefined&&data.success==true){
+						
+					}
+				}.bind(this));
+			}
+
+			this.Views=function(){
+				//删除无权限的二级菜单
+				$.each($('[data-url-manage]'),function(i,item){
+					if($(item).is(":hidden")){
+						$(item).remove();
+					}
+				}.bind(this));
+				//删除无二级菜单的一级菜单
+				$.each($('div.v4-nav-group'),function(i,item){
+					var ctrl=$(item);
+					if(ctrl.nextUntil('div.v4-nav-group').length<1){
+						ctrl.remove();
+					}
+				});
+				//一级菜单点击事件
+				$('div.v4-nav-group').on('click','',function(e){	
+					var ctrl=$(this).jparent('div.v4-nav-group');
+					var children=ctrl.nextUntil('div.v4-nav-group');
+					var status=children.is(":hidden");
+					children.slideToggle(300);
+					if(!status){
+						ctrl.removeClass('v4-nav-group-open');
+					}else{
+						ctrl.addClass('v4-nav-group-open');
+					}
+				});
+				var that = this;
+				//二级菜单点击事件
+				$(ctrl).delegate('[data-url-manage]','click',function(e){			
+					var ctrl=$(this).jparent('[data-url-manage]');
+					if(ctrl.hasClass('doit')){
+						if($('[data-cover="true"]').hasClass('v4-uncursor-mask')){
+							$('[data-cover="true"]').removeClass('v4-uncursor-mask');
+						}
+						var step = ctrl.attr('data-stepnum');
+						if(step>=4){
+							step=0;
+							that.FuncDelStep();
+						}else{
+							step++;
+						}
+						setTimeout(function(){
+							$('[data-cover="true"]').addClass('v4-uncursor-mask')
+						},3000)
+						that.FuncSetGuide('doit',tone.views.AttrUser().CompanyID,step)
+						that.CtrlDoItStep(step);
+					}
+					tone.func.get(ctrl.attr('data-url-manage'),function(data){
+						try{
+							$('#'+that.CtrlID).html(data);
+							$('[data-url-manage]').removeClass('current');
+							if(that.CtrlGuideStep()==0){
+								ctrl.addClass('current');
+							}
+						}catch(e){console.log(e);}
+					});
+				});
+				/*
+				$(ctrl).delegate('[data-ui-parent]','click',function(e){
+					var ctrl=$(this).jparent('[data-ui-parent]');
+					var hasOpened = ctrl.hasClass('open');
+					$('[data-ui-parent]').removeClass('open');
+					$('[data-ui-child]').hide('fast');
+					if(!hasOpened){
+						ctrl.next().show('fast');
+						ctrl.addClass('open');
+					}
+				});
+				*/
+				//打开第一个有权限的页面
+				$.each($('[data-url-manage]'),function(i,item){
+					if($(item).is(":hidden")==false){
+						$(item).click();
+						return false;
+					}
+				});
+				//隐藏所有菜单
+				$('[data-url-manage]').hide();
+				//显示第一个菜单
+				$($('div.v4-nav-group')[0]).click();
+				//页面初始化
+				this.FuncInit();
+				//获取未完成向导步骤
+				this.FuncGetStep();
+				this.FuncGetTempList();
+				if(this.CtrlGuideStep()!=0){
+					$('[data-url-manage]').removeClass('current');
+				}
+				
+			};
+			this.Binding=function(ctrl){
+				ko.applyBindings(this,ctrl);
+				this.Views();
+			};
+		}
+		tone.module_Manage_V2 = new(Manage_Manage_Index_V21);
+		tone.module_Manage_V2.Binding(ctrl[0]);
+		
+	});
+</script>
+</div>
