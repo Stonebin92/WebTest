@@ -1,0 +1,221 @@
+<div id="{{.GUID}}">
+	<div class="right-contentA plr50 p25 bgff" style="display:none-;">
+		<div class="v4-edit-richtext v4-news-editrichtext">
+			<input data-bind="textInput:AttrArti.Title" type="text" placeholder="输入知识标题" class="bigtitle"/>
+			<div>
+				<div class="labeltitle overflow-h">
+					<input data-bind="textInput:AttrArti.Tags" type="text" placeholder="点击添加标签，以逗号隔开（通过给知识添加#标签#，更好地整理知识）" />
+				</div>
+			</div>
+			<div class="mt30 v4-speacial-nav">
+				<a data-type="0" data-bind="click:EventSwitchContent,css:{'current':AttrContentType()==0}" class="mr15 f-bold fs14">内容</a>
+				<a data-type="1" data-bind="click:EventSwitchContent,css:{'current':AttrContentType()==1}" class="current f-bold fs14">焦点图片</a>
+			</div>
+			<!-- 插入副文本 --><!-- 内容 -->
+			<div data-bind="visible:AttrContentType()==0" class="edit-richtext-div" style="top:132px;display:none-;">
+			    <div class="container">
+			        <div data-bind="attr:{id:AttrEditors.CtrlThemeID}"><p>请输入内容</p></div>
+			    </div>
+			</div>
+			<!-- 插入副文本 --><!-- 焦点图片 -->
+			<div data-bind="visible:AttrContentType()==1" class="edit-richtext-div" style="top:132px;overflow:hidden;display:none">
+				<div data-bind="visible:AttrCoverData().length<1" class="edit-richtext-image" style="margin-top:10%;">
+					<button class="upload-btn clr77 fs16">
+						<span>上传图片</span>
+						<input data-ui="img" data-bind="event:{change:EventUploadImg}" type="file"/>
+					</button>
+					<div style="display:none" class="fs16 clr77 mt20">或直接拖拽图片到该区域，完成上传</div>
+					<div class="clrbb mt10">建议图片尺寸为 960*540，大小不超过 1M</div>
+				</div>
+				<div data-bind="visible:AttrCoverData().length>0,click:EventSwitchCover" class="check-theme-banner s-bgf5" style="height:100%;display:none;">
+					<img data-bind="attr:{src:AttrCoverData()}" src="/V2.4/img/arti?id=56c2f2b860faf51cc65b546e" style="height:100%;"/>
+				</div>				
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function () {
+
+	var control = $('#{{.GUID}}');
+	tone.sys.loadcss('{{.StaticServer}}/common/cssAndjs/lib/wangeditor-2.1.21/css/wangEditor.min.css');
+	tone.sys.loadjs('{{.StaticServer}}/common/cssAndjs/lib/highlight.min.js',false);
+	tone.sys.loadjs('{{.StaticServer}}/common/cssAndjs/lib/wangeditor-2.1.21/wangEditor.min.js',false);
+	tone.sys.loadjs('{{.StaticServer}}/common/cssAndjs/lib/wangeditor-2.1.21/imgplugins.js', function(){
+		var t1_model_arti_edit = new T1_Model_Arti_Edit();
+		window.wangEditor.UI_Type = "arti";
+		t1_model_arti_edit.Bindings(control[0]);
+	});
+	function T1_Model_Arti_Edit () {
+		/*富文本编辑器及作用位置*/
+		this.AttrEditors = {
+			CtrlThemeID: tone.sys.guid(),
+			AttrThemeEditor: {}
+		};
+
+		this.AttrContentType = ko.observable(0);//0显示,1隐藏
+		this.AttrCoverData = ko.observable('');
+		this.AttrIsEdit = ko.observable(0);//0增加,1编辑
+		this.AttrArti = {
+			ID: '',
+			Title: ko.observable(''),
+			Content: ko.observable(''),
+			Cover2Data: ko.observable(''),
+			Tags: ko.observable(''),
+			Cover2: ko.observable(''),
+			//Type: ko.observable(1),
+			Actor: ko.observableArray([]),//编辑知识时传递到编辑框
+			Video2: ko.observableArray([]),
+			Images2: ko.observableArray([])
+		};
+
+		/*内容与图片转换,控制对应显示的内容*/
+		this.EventSwitchContent = function (m ,e) {
+			var n = $(e.target).attr('data-type');
+			this.AttrContentType(n);
+		};
+
+		/*上传焦点图片*/
+		this.EventUploadImg = function (m, e) {
+			tone.sys.img_inflate($(e.target)[0],function(data){
+				if (data.length < 1) { return; }
+				var s = data.split(',');
+				this.AttrArti.Cover2Data(s[1]);
+				this.AttrCoverData(data);
+			}.bind(this), 500*1024);
+		};
+
+		/*变换焦点图片*/
+		this.EventSwitchCover = function () {
+			$('[data-ui="img"]').click();
+		};
+		
+		/*发布知识*/
+		this.EventSaveData = function () {
+			var url = '';
+			//判断知识是新增还是编辑
+			if (this.AttrIsEdit() == 0) {
+				url = '/article/admin/add';
+			} else {
+				url = '/article/update';
+			}
+			var ok = this.FuncCheckData();
+			if (!ok) {
+				return;
+			}
+			var params = this.FuncMakeData();
+			// 调用知识发布方法
+			this.FuncSaveData(url, params, function (data) {
+				console.log(data);
+			})
+		}.bind(this);
+
+		/*检验知识内容数据*/
+		this.FuncCheckData = function () {
+			var ok = true;
+			var data = this.AttrArti;
+			var clen = this.AttrEditors.AttrThemeEditor.$txt.html().length;
+			if (data.Title().length < 1 || data.Title().length > 60) {
+				ok = false;
+				tone.views.FuncAddTip('标题不能为空且长度不能大于60');
+				return ok;
+			}
+			if (clen < 1 || clen > 6000) {
+				ok = false;
+				tone.views.FuncAddTip('内容不能为空且长度不能过长');
+				return ok;
+			}
+			return ok;
+		};
+
+		/*制作知识数据*/
+		this.FuncMakeData = function () {
+			var data = this.AttrArti;
+			var params = {};
+			params.Title = data.Title();
+			params.Content = this.AttrEditors.AttrThemeEditor.$txt.html();
+			params.Tags = data.Tags();
+			params.Cover2 = data.Cover2();
+			params.Cover2Data = data.Cover2Data();
+			params.Images2 = data.Images2();
+			params.Video2 = data.Video2();
+			//params.Type = data.Type();
+			if (this.AttrIsEdit() == 1) {
+				params.ID = data.ID;
+			}
+			return params;
+		};
+
+		/*知识发布方法*/
+		this.FuncSaveData = function (url, params, callback) {
+			tone.ajaxJson(url, params, 'post', function (data) {
+				if (data.success == true) {
+					callback(data.data);
+					this.FuncBack();
+				} else {
+					if (tip.length > 0)  tone.views.FuncAddTip(tip);
+					if (data.error.length > 0) {
+						tone.views.FuncAddTip('知识发布失败');
+					}
+				}
+			}.bind(this));
+		};
+		this.FuncBack = function () {};
+
+		this.FuncInit = function (data) {
+			if (data != undefined) {
+				//编辑已有的知识
+				this.AttrIsEdit(1);
+				this.AttrArti.ID = data.ID;
+				this.AttrArti.Title(data.Title);
+				this.AttrArti.Content(data.Content);
+				this.AttrArti.Cover2Data(data.Cover2Data || '');
+				this.AttrArti.Cover2(data.Cover2 || '');
+				this.AttrArti.Tags(data.Tags.join(','));
+				//this.AttrArti.Type(data.ExtType);
+				this.AttrArti.Video2(data.Video2 || []);
+				this.AttrArti.Images2(data.Images2 || []);
+				this.AttrArti.Actor([]);
+				this.AttrEditors.AttrThemeEditor.$txt.html(data.Content);
+				if (data.Cover2.length > 0) {
+					this.AttrCoverData('/V2.4/img/atri?id='+data.Cover2);
+				}
+
+			} else {
+				//新增的知识
+				this.AttrArti.ID = '';
+				this.AttrIsEdit(0);
+				this.AttrArti.Title('');
+				this.AttrArti.Content('');
+				this.AttrArti.Cover2('');
+				this.AttrArti.Cover2Data('');
+				this.AttrArti.Tags('');
+				this.AttrArti.Video2([]);
+				this.AttrArti.Images2([]);
+				this.AttrArti.Actor([]);
+			}
+		};
+
+		this.FuncClear = function () {};
+
+		/*创建富文本编辑框*/
+		this.FuncCreateEditor = function () {
+			this.AttrEditors.AttrThemeEditor = new wangEditor(this.AttrEditors.CtrlThemeID);
+			this.AttrEditors.AttrThemeEditor.config.menus= [
+					  "fontfamily", "fontsize", "|","bold", "underline", "italic", "head","forecolor","bgcolor", "|", "unorderlist", "orderlist", "|","alignleft", "aligncenter", "alignright", "|"
+						,"img"
+					  ];
+			this.AttrEditors.AttrThemeEditor.create();
+		};
+
+		this.Views = function () {
+			this.FuncCreateEditor();
+		};
+
+		this.Bindings = function (control) {
+			ko.applyBindings(this, control);
+			this.Views();
+		}
+	}
+})
+</script>
